@@ -112,3 +112,25 @@ int set_interactive_override(struct power_module *module, int on)
 
     return HINT_NONE;
 }
+
+int power_hint_override(struct power_module *module, power_hint_t hint,
+        void *data)
+{
+    switch(hint) {
+        case POWER_HINT_CPU_BOOST:
+            boost(module, data, (int) data / 1000);
+            break;
+        case POWER_HINT_LAUNCH_BOOST:
+            boost(module, data, 2000);
+            break;
+    }
+    return HINT_NONE;
+}
+
+void boost(struct power_module *module, void *data, int duration)
+{
+    // Not Implemented yet.
+    if (duration < 0)
+        return;
+    ALOGW("dummy boost hint with duratuon: %d", duration);
+}
