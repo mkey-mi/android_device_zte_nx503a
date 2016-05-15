@@ -139,9 +139,11 @@ service qseecomd /system/bin/qseecomd
    user root
    group root
 
-service mpdecision /system/bin/mpdecision --avg_comp
+service mpdecision /system/bin/mpdecision
+   class main
    user root
    disabled
+   socket perfd seqpacket 0666 root system
 
 service qosmgrd /system/bin/qosmgr /system/etc/qosmgr_rules.xml
    user system
