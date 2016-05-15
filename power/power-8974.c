@@ -118,19 +118,22 @@ int power_hint_override(struct power_module *module, power_hint_t hint,
 {
     switch(hint) {
         case POWER_HINT_CPU_BOOST:
-            boost(module, data, (int) data / 1000);
+        {
+            int resources[] = {0x212, 0x312};
+            int duration = (int) data / 1000;
+
+            interaction(duration, sizeof(resources)/sizeof(resources[0]), resources);
+        }
             break;
         case POWER_HINT_LAUNCH_BOOST:
-            boost(module, data, 2000);
-            break;
+        {
+            int resources[] = {0x704, 0x214, 0x314, 0x414, 0x514};
+            int duration = 2000;
+
+            interaction(duration, sizeof(resources)/sizeof(resources[0]), resources);
+        }
+        case POWER_HINT_INTERACTION:
+            return HINT_HANDLED;
     }
     return HINT_NONE;
-}
-
-void boost(struct power_module *module, void *data, int duration)
-{
-    // Not Implemented yet.
-    if (duration < 0)
-        return;
-    ALOGW("dummy boost hint with duratuon: %d", duration);
 }
